@@ -1,0 +1,19 @@
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "if [[ \"$TOOL_INPUT\" == *\".go\"* ]]; then filepath=$(echo \"$TOOL_INPUT\" | grep -oE '\"[^\"]*\\.go\"' | head -1 | tr -d '\"'); [ -n \"$filepath\" ] && [ -f \"$filepath\" ] && gofmt -w \"$filepath\"; fi"
+          },
+          {
+            "type": "command",
+            "command": "if [[ \"$TOOL_INPUT\" == *\".py\"* ]]; then filepath=$(echo \"$TOOL_INPUT\" | grep -oE '\"[^\"]*\\.py\"' | head -1 | tr -d '\"'); [ -n \"$filepath\" ] && [ -f \"$filepath\" ] && black --quiet \"$filepath\" 2>/dev/null; fi"
+          }
+        ]
+      }
+    ]
+  }
+}
